@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/usuario")
@@ -96,5 +97,12 @@ public class UsuarioController {
     public ResponseEntity<Moto> salvarMoto(@PathVariable int usuarioId, @RequestBody Moto moto){
         Moto novaMoto = usuarioService.saveMoto(usuarioId, moto);
         return ResponseEntity.ok(novaMoto);
+    }
+
+    // http://localhost:8001/api/usuario/searchAllCarAndMotocycle/{usuarioId}
+    @GetMapping("/searchAllCarAndMotocycle/{usuarioId}")
+    public ResponseEntity<Map<String, Object>> listarTodosCarrosEMotos(@PathVariable int usuarioId){
+        Map<String, Object> resultado = usuarioService.getUsuarioAndCarroEMoto(usuarioId);
+        return ResponseEntity.ok(resultado);
     }
 }

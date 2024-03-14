@@ -10,7 +10,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -68,5 +70,31 @@ public class UsuarioService {
         moto.setUsuarioId(usuarioId);
         Moto novaMoto = motoFeignClient.save(moto);
         return novaMoto;
+    }
+
+    public Map<String, Object> getUsuarioAndCarroEMoto(int usuarioId) {
+        Map<String, Object> resultado = new HashMap<>();
+        Usuario usuario = usuarioRepository.findById(usuarioId).orElseThrow(() -> new RuntimeException("Id: " + usuarioId + " não encontrado"));
+
+        if (usuario == null) {
+            resultado.put("Mensagem", "Usuário não existe!");
+            return resultado;
+        }
+
+        resultado.put("Usuario", usuario);
+        List<Carro> carros = carroFeignClient.getCarros(usuarioId);
+        if (carros.isEmpty()) {
+            resultado.put("Carros", "Usuário não tem carro!");
+        } else {
+            resultado.put("Carros", carros);
+        }
+
+        List<Moto> motos = motoFeignClient.getMotos(usuarioId);
+        if (motos.isEmpty()) {
+            resultado.put("Motos", "Usuário não tem moto!");
+        } else {
+            resultado.put("Motos", motos);
+        }
+        return resultado;
     }
 }
