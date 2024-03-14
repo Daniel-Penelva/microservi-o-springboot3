@@ -1,6 +1,7 @@
 package com.microservice.usuario.services;
 
 import com.microservice.usuario.entities.Usuario;
+import com.microservice.usuario.feignclients.CarroFeignClient;
 import com.microservice.usuario.models.Carro;
 import com.microservice.usuario.models.Moto;
 import com.microservice.usuario.repositories.UsuarioRepository;
@@ -16,6 +17,7 @@ public class UsuarioService {
 
     private UsuarioRepository usuarioRepository;
     private RestTemplate restTemplate;
+    private CarroFeignClient carroFeignClient;
 
     public List<Usuario> getAll() {
         return usuarioRepository.findAll();
@@ -50,5 +52,13 @@ public class UsuarioService {
     public List<Moto> getMotos(int usuarioId) {
         List<Moto> motos = restTemplate.getForObject("http://localhost:8003/api/moto/searchUserId/" + usuarioId, List.class);
         return motos;
+    }
+
+    /* Métodos do serviço que fará comunicação com os microserviços Carro e Moto - utilizando OpenFeign */
+
+    public Carro saveCarro(int usuarioId, Carro carro){
+        carro.setUsuarioId(usuarioId);
+        Carro novoCarro = carroFeignClient.save(carro);
+        return novoCarro;
     }
 }

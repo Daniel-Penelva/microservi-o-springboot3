@@ -80,4 +80,14 @@ public class UsuarioController {
         List<Moto> motos = usuarioService.getMotos(usuarioId);
         return ResponseEntity.ok(motos);
     }
+
+
+    /* Métodos do serviço que fará comunicação com os microserviços Carro e Moto - utilizando OpenFeign */
+
+    // http://localhost:8001/api/usuario/save/carro/{usuarioId}
+    @PostMapping("/save/carro/{usuarioId}")
+    public ResponseEntity<Carro> salvarCarro(@PathVariable int usuarioId, @RequestBody Carro carro){
+        Carro novoCarro = usuarioService.saveCarro(usuarioId, carro);
+        return ResponseEntity.ok(novoCarro);
+    }
 }
