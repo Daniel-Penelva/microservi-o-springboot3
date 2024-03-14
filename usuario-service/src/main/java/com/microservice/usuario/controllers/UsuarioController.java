@@ -90,4 +90,11 @@ public class UsuarioController {
         Carro novoCarro = usuarioService.saveCarro(usuarioId, carro);
         return ResponseEntity.ok(novoCarro);
     }
+
+    // http://localhost:8001/api/usuario/save/moto/{usuarioId}
+    @PostMapping("/save/moto/{usuarioId}")
+    public ResponseEntity<Moto> salvarMoto(@PathVariable int usuarioId, @RequestBody Moto moto){
+        Moto novaMoto = usuarioService.saveMoto(usuarioId, moto);
+        return ResponseEntity.ok(novaMoto);
+    }
 }

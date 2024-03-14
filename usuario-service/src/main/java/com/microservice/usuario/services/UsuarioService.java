@@ -2,6 +2,7 @@ package com.microservice.usuario.services;
 
 import com.microservice.usuario.entities.Usuario;
 import com.microservice.usuario.feignclients.CarroFeignClient;
+import com.microservice.usuario.feignclients.MotoFeignClient;
 import com.microservice.usuario.models.Carro;
 import com.microservice.usuario.models.Moto;
 import com.microservice.usuario.repositories.UsuarioRepository;
@@ -18,6 +19,7 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepository;
     private RestTemplate restTemplate;
     private CarroFeignClient carroFeignClient;
+    private MotoFeignClient motoFeignClient;
 
     public List<Usuario> getAll() {
         return usuarioRepository.findAll();
@@ -60,5 +62,11 @@ public class UsuarioService {
         carro.setUsuarioId(usuarioId);
         Carro novoCarro = carroFeignClient.save(carro);
         return novoCarro;
+    }
+
+    public Moto saveMoto(int usuarioId, Moto moto){
+        moto.setUsuarioId(usuarioId);
+        Moto novaMoto = motoFeignClient.save(moto);
+        return novaMoto;
     }
 }
