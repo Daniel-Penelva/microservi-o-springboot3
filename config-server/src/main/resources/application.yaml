@@ -5,7 +5,7 @@ spring:
     config:
       server:
         git:
-          default-label: eureka  # define a branch a ser utilizada
+          default-label: gateway  # define a branch a ser utilizada
           uri: https://github.com/Daniel-Penelva/microservico-springboot3
           search-paths: config-data
   application:
