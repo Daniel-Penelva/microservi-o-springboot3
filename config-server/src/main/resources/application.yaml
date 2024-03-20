@@ -5,10 +5,10 @@ spring:
     config:
       server:
         git:
-          default-label: config-server  # define a branch a ser utilizada
+          default-label: eureka  # define a branch a ser utilizada
           uri: https://github.com/Daniel-Penelva/microservico-springboot3
           search-paths: config-data
   application:
     name: config-server
 
-# A propriedade "search-paths" e o valor "config-data" é o nome da pasta onde vai ter os arquivos (.yaml) das configurações dos servidores de cada microserviço - está pasta ficará na pasta raiz do projeto.
+# A propriedade "search-paths" e o valor "config-data" ï¿½ o nome da pasta onde vai ter os arquivos (.yaml) das configuraï¿½ï¿½es dos servidores de cada microserviï¿½o - estï¿½ pasta ficarï¿½ na pasta raiz do projeto.
